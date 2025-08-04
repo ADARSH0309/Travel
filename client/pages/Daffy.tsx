@@ -747,13 +747,14 @@ function TripPlannerMain() {
                     <p className="text-gray-600 text-sm leading-relaxed mb-6">
                       Talk to a certified travel expert for personalized planning and booking assistance.
                     </p>
-                    <Button
+                    {/* <Button
                       className="bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2"
                       onClick={() => console.log("Voice agent widget triggered")}
                     >
                       <Phone className="h-4 w-4" />
                       <span>Call Travel Expert</span>
-                    </Button>
+                    </Button> */}
+                    
                   </div>
                 </div>
                 <ElevenLabsWidget />
