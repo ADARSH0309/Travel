@@ -744,7 +744,7 @@ function TripPlannerMain() {
                   </div>
                   <div className="flex-1">
                     <h3 className="text-lg font-bold text-gray-900 mb-2">Need a Human Touch?</h3>
-                    <p className="text-gray-600 text-sm leading-relaxed mb-14">
+                    <p className="text-gray-600 text-sm leading-relaxed mb-16">
                       Talk to a certified travel expert for personalized planning and booking assistance.
                     </p>
                     {/* <Button
