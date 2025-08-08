@@ -26,7 +26,10 @@ import {
   Coffee,
   TreePine,
   Music,
-  Home
+  Home,
+  Hotel,
+  Target,
+  ArrowRight
 } from "lucide-react";
 
 interface TripDetails {
@@ -379,6 +382,62 @@ const sampleTripOutput = `---
 
 ---`;
 
+const sampleItinerary = {
+  destination: "Paris, France",
+  duration: "5 days",
+  budget: "$1,200",
+  departureDate: "July 29, 2025",
+  returnDate: "August 1, 2025",
+  flights: [
+    {
+      airline: "Air France",
+      departureTime: "9:00 AM - July 29, 2025",
+      duration: "8h 30m",
+      features: "Business Class, Direct Flight, In-flight meals",
+      price: "$850",
+      type: "Round Trip"
+    }
+  ],
+  accommodations: [
+    {
+      name: "Hotel Le Marais",
+      link: "https://booking.com/hotel-le-marais",
+      image: "https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg",
+      ratePerNight: "$180",
+      totalRate: "$900",
+      nearbyPlaces: "Louvre Museum, Notre-Dame Cathedral, Seine River",
+      amenities: "Free WiFi, Breakfast included, Fitness center, Concierge service"
+    }
+  ],
+  activities: [
+    {
+      title: "Eiffel Tower Skip-the-Line Tour",
+      link: "https://viator.com/eiffel-tower-tour",
+      description: "Experience breathtaking views from the iconic Eiffel Tower with priority access and expert guide"
+    },
+    {
+      title: "Seine River Evening Cruise",
+      link: "https://viator.com/seine-cruise",
+      description: "Romantic evening cruise along the Seine with dinner and live music"
+    },
+    {
+      title: "Louvre Museum Private Tour",
+      link: "https://viator.com/louvre-tour",
+      description: "Discover world-famous artworks including the Mona Lisa with a private art historian guide"
+    }
+  ],
+  days: [
+    {
+      day: "Day 1",
+      activities: [
+        { time: "9:00 AM", title: "Arrival", description: "Land at Charles de Gaulle Airport" },
+        { time: "2:00 PM", title: "Hotel Check-in", description: "Check into Hotel Le Marais" },
+        { time: "7:00 PM", title: "Welcome Dinner", description: "Traditional French cuisine" }
+      ]
+    }
+  ]
+};
+
 // Error Boundary Component
 class ErrorBoundary extends React.Component<
   { children: React.ReactNode },
@@ -571,130 +630,118 @@ function TripPlannerMain() {
         <Header />
         <section className="flex-1 py-12 bg-gradient-to-br from-ocean-50 to-forest-50">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
+            {/* Main Heading */}
+            <div className="text-center mb-16">
               <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-green-500 to-blue-500 text-white px-6 py-2 rounded-full text-sm font-semibold mb-6 animate-bounce">
-                <Sparkles className="h-4 w-4" />
+                <Globe className="h-4 w-4" />
                 <span>Your Trip Plan is Ready!</span>
               </div>
               <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-4">
-                {generatedPlan.route.split(' → ')[0]} to
-                <span className="block bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-                  {generatedPlan.route.split(' → ')[1]}
-                </span>
+                🌍 Your Personalized Travel Plan
               </h1>
-              <p className="text-xl text-gray-600">{generatedPlan.tripDates}</p>
+              <p className="text-xl text-gray-600">{sampleItinerary.destination} • {sampleItinerary.departureDate} - {sampleItinerary.returnDate}</p>
             </div>
 
-            {/* Trip Overview */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-              <Card className="border-0 bg-white shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-                <CardContent className="p-8">
-                  <div className="flex items-center space-x-4 mb-6">
-                    <div className="bg-gradient-to-r from-ocean-500 to-forest-500 w-12 h-12 rounded-full flex items-center justify-center">
-                      <Calendar className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900">Duration</h3>
-                      <p className="text-gray-600">{generatedPlan.duration}</p>
-                    </div>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Budget Tier</span>
-                      <span className="font-semibold text-gray-900">{generatedPlan.budgetTier}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Group Size</span>
-                      <span className="font-semibold text-gray-900">{generatedPlan.groupSize}</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-0 bg-white shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-                <CardContent className="p-8">
-                  <div className="flex items-center space-x-4 mb-6">
-                    <div className="bg-gradient-to-r from-green-500 to-blue-500 w-12 h-12 rounded-full flex items-center justify-center">
-                      <Heart className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900">Interests</h3>
-                      <p className="text-gray-600">Your preferences</p>
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {generatedPlan.interests.split(', ').map((interest, index) => (
-                      <span key={index} className="bg-gradient-to-r from-blue-100 to-green-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium">
-                        {interest}
-                      </span>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-0 bg-white shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-                <CardContent className="p-8">
-                  <div className="flex items-center space-x-4 mb-6">
-                    <div className="bg-gradient-to-r from-purple-500 to-pink-500 w-12 h-12 rounded-full flex items-center justify-center">
-                      <MapPin className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900">Route</h3>
-                      <p className="text-gray-600">Your journey</p>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-2">
-                      <Plane className="h-4 w-4 text-gray-400" />
-                      <span className="text-gray-700">{generatedPlan.route}</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Day by Day Itinerary */}
-            <div className="space-y-8">
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">Day-by-Day Itinerary</h2>
-                <p className="text-gray-600">Your personalized travel schedule</p>
-              </div>
-
-              {Object.entries(generatedPlan.days).map(([day, activities], dayIndex) => (
-                <Card key={day} className="border-0 bg-white shadow-xl overflow-hidden">
-                  <CardContent className="p-0">
-                    <div className="bg-gradient-to-r from-blue-500 to-green-500 text-white p-6">
-                      <h3 className="text-2xl font-bold">{day}</h3>
-                    </div>
-                    <div className="p-8">
-                      <div className="space-y-6">
-                        {activities.map((activity, actIndex) => {
-                          const IconComponent = getActivityIcon(activity.title);
-                          return (
-                            <div key={actIndex} className="flex items-start space-x-4 p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
-                              <div className="flex-shrink-0">
-                                <div className="bg-gradient-to-r from-blue-500 to-green-500 w-12 h-12 rounded-full flex items-center justify-center">
-                                  <IconComponent className="h-6 w-6 text-white" />
-                                </div>
-                              </div>
-                              <div className="flex-1">
-                                <div className="flex items-center space-x-2 mb-2">
-                                  <Clock className="h-4 w-4 text-gray-400" />
-                                  <span className="text-sm font-semibold text-blue-600">{activity.time}</span>
-                                </div>
-                                <h4 className="text-lg font-bold text-gray-900 mb-2">{activity.title}</h4>
-                                <p className="text-gray-600 leading-relaxed">{activity.description}</p>
-                              </div>
-                            </div>
-                          );
-                        })}
+            {/* Flight Information Section */}
+            <Card className="border-0 bg-white shadow-xl mb-12">
+              <CardContent className="p-8">
+                <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                  <Plane className="h-8 w-8 mr-3 text-blue-600" />
+                  ✈️ Best Flight Options
+                </h2>
+                <h3 className="text-xl font-semibold text-gray-800 mb-6">
+                  Departure & Return Dates: {sampleItinerary.departureDate} - {sampleItinerary.returnDate}
+                </h3>
+                
+                {sampleItinerary.flights.map((flight, index) => (
+                  <div key={index} className="bg-gradient-to-r from-blue-50 to-sky-50 rounded-xl p-6 mb-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <p className="mb-2"><strong>Airline:</strong> {flight.airline}</p>
+                        <p className="mb-2"><strong>Departure Time:</strong> {flight.departureTime}</p>
+                        <p className="mb-2"><strong>Duration:</strong> {flight.duration}</p>
+                      </div>
+                      <div>
+                        <p className="mb-2"><strong>Features:</strong> {flight.features}</p>
+                        <p className="mb-2"><strong>Price & Type:</strong> {flight.price} ({flight.type})</p>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
 
+            <hr className="border-gray-300 my-12" />
+
+            {/* Accommodation Section */}
+            <Card className="border-0 bg-white shadow-xl mb-12">
+              <CardContent className="p-8">
+                <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                  <Hotel className="h-8 w-8 mr-3 text-green-600" />
+                  🏨 Top Resorts for Your Stay
+                </h2>
+                
+                {sampleItinerary.accommodations.map((hotel, index) => (
+                  <div key={index} className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 mb-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                      <div className="lg:col-span-1">
+                        <img 
+                          src={hotel.image} 
+                          alt={hotel.name}
+                          className="w-full h-48 object-cover rounded-lg"
+                        />
+                      </div>
+                      <div className="lg:col-span-2">
+                        <h3 className="text-2xl font-bold text-gray-900 mb-4">{hotel.name}</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <p className="mb-2"><strong>Link:</strong> <a href={hotel.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Book Now</a></p>
+                            <p className="mb-2"><strong>Rate per Night:</strong> {hotel.ratePerNight}</p>
+                            <p className="mb-2"><strong>Total Rate:</strong> {hotel.totalRate}</p>
+                          </div>
+                          <div>
+                            <p className="mb-2"><strong>Nearby Places:</strong> {hotel.nearbyPlaces}</p>
+                            <p className="mb-2"><strong>Amenities:</strong> {hotel.amenities}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+
+            <hr className="border-gray-300 my-12" />
+
+            {/* Activities Section */}
+            <Card className="border-0 bg-white shadow-xl mb-12">
+              <CardContent className="p-8">
+                <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                  <Target className="h-8 w-8 mr-3 text-orange-600" />
+                  🎯 Exciting Activities to Try
+                </h2>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {sampleItinerary.activities.map((activity, index) => (
+                    <div key={index} className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl p-6">
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">{activity.title}</h3>
+                      <p className="text-gray-700 mb-4 leading-relaxed">{activity.description}</p>
+                      <a 
+                        href={activity.link} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-orange-600 hover:text-orange-700 font-semibold hover:underline"
+                      >
+                        Book Activity
+                        <ArrowRight className="h-4 w-4 ml-1" />
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Action Buttons */}
             <div className="text-center mt-12 space-x-4">
               <Button size="lg" className="bg-gradient-to-r from-blue-500 to-green-500 text-white px-8 py-4">
                 <Heart className="mr-2 h-5 w-5" /> Save This Plan
