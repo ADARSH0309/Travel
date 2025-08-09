@@ -554,7 +554,7 @@ function TripPlannerMain() {
   const generatePlan = async () => {
     setIsGenerating(true);
     try {
-      const res = await fetch("https://adarskr03.app.n8n.cloud/webhook/travel-chat", {
+      const res = await fetch("https://adarsh03.app.n8n.cloud/webhook/travel-chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(tripDetails)
